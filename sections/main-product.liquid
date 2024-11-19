@@ -966,6 +966,7 @@
           {% endif %}
         {% endif %}
 {% endcomment %}
+                              {% if product.metafields.custom.product_summary != blank %}
         <div class="cst-custom-receipe-desc">
           {% if section.settings.syruvia_info != blank %}
             <div class="cst-custom-heading h1">
@@ -1026,7 +1027,8 @@
               </div>
             {% endif %}
           </div>
-        </div>    
+        </div>   
+                 {% endif %}             
       </div>
       <div class="cst-custom-right-sec product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
         <product-info

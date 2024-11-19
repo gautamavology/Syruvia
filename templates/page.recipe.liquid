@@ -226,6 +226,13 @@ padding-bottom: 21px!important;
             </div></div>
     </div>
 </section>
+      <div class="bg-images-gt">
+        <img class="bg-one-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Group_24_680d533d-0b43-4c61-aa02-327bd95051ca.png?v=1731932628">
+        <img class="bg-two-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object1_32341e86-a0be-42ab-90a2-0a0cf818edd6.png?v=1731932735">
+        <img class="bg-three-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/ewdfwedwedwe.png?v=1730286283">
+        <img class="bg-four-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/vfdgfdg.png?v=1730286347">
+        <img class="bg-five-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/wedwededw.png?v=1730288187">
+      </div>
       <section class="recipe-design1">
         <div class="container">
           <div class="filter-cstm-gt">
@@ -344,15 +351,9 @@ padding-bottom: 21px!important;
         
       </section>
       <section class="text-center mb-5">
-        <button id="loadMore" class="btn btn-outline-primary btn-lg">Loading...</button>
+        <button id="loadMore" class="btn btn-outline-primary btn-lg"></button>
       </section>
-      <div class="bg-images-gt">
-        <img class="bg-one-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Group_24_680d533d-0b43-4c61-aa02-327bd95051ca.png?v=1731932628">
-        <img class="bg-two-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object1_32341e86-a0be-42ab-90a2-0a0cf818edd6.png?v=1731932735">
-        <img class="bg-three-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/ewdfwedwedwe.png?v=1730286283">
-        <img class="bg-four-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/vfdgfdg.png?v=1730286347">
-        <img class="bg-five-gt" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/wedwededw.png?v=1730288187">
-      </div>
+      
     </div>
 
     <!-- recipe view section design -->
@@ -1063,14 +1064,26 @@ sortDropdown.addEventListener('change', function() {
                 data-a2a-url="https://www.webcreta.com/"
                 data-a2a-title="Webcreta"
               >
-                <!-- <a class="a2a_dd" href="https://www.addtoany.com/share"></a> -->
+               <!-- <a class="a2a_dd" href="https://www.addtoany.com/share"></a> 
                 <a class="a2a_button_facebook"><i class="fa-brands fa-facebook-f"></i></a>
                 <a class="a2a_button_twitter"><i class="fa-brands fa-twitter"></i></a>
                 <a class="a2a_button_whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
                 <a class="a2a_button_pinterest"><i class="fa-brands fa-pinterest"></i></a>
                 <a class="pdf-icon mb-0" onclick="rjPrint()" id="printPDF"
                 ><i class="fa-solid fa-print"></i
-              ></a>
+              ></a>-->
+              <div class="social-buttons">
+    <a class="social-btn a2a_button_instagram" href="https://www.instagram.com/syruvia_official" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a class="social-btn a2a_button_tiktok" href="https://www.tiktok.com/@syruviaofficial" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+    <a class="social-btn a2a_button_youtube" href="https://www.youtube.com/@Syruvia" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+    </a>
+</div>
+
               </div>
             </div>
                                                 </div></div></div>`;
@@ -1264,7 +1277,7 @@ sortDropdown.addEventListener('change', function() {
                 <ul class="slider-recipe-gt product-list">`;
 
    availableProducts.forEach(function (product, index) {
-      let price = (product.variants[0].price / 100).toFixed(2);
+      let price =  product.variants[0].price; // Use directly if already in dollars
       let colorClass = '';
       switch (index % 4) {
         case 0:
@@ -1371,51 +1384,49 @@ sortDropdown.addEventListener('change', function() {
 
 // Append the generated HTML to the recipe view
 recipeView.innerHTML += html;
-
+ 
 // Initialize the Slick Carousel on the `.slider-recipe-gt` class
 $('.slider-recipe-gt').slick({
-  centerMode: false,
-   variableWidth: true,
-      slidesToShow: 4,
+   slidesToShow:4,
       responsive: [
         {
           breakpoint: 1300,
           settings: {
             arrows: true,
-            slidesToShow: 3
+            slidesToShow: 4,
+            slidesToScroll: 1
           }
         },
         {
           breakpoint: 991,
           settings: {
             arrows: true,
-         
-            slidesToShow: 2
+            slidesToShow: 2,
+            slidesToScroll:1
           }
         },
         {
           breakpoint: 768,
           settings: {
             arrows: true,
-          
-            centerPadding: '100px',
-            slidesToShow: 2
-
+              centerMode: true,
+            slidesToShow: 1,
+            slidesToScroll: 1
+         
           }
         },
         {
-          breakpoint: 480,
+          breakpoint: 481,
           settings: {
             arrows: true,
-          
-            centerPadding: '70px',
-            slidesToShow: 1
+            slidesToShow: 1,
+            slidesToScroll: 1
           }
         }
       ]
     });
 
-
+ 
   }
 };
 
@@ -1582,9 +1593,27 @@ $('.slider-recipe-gt').slick({
       }
 
       function setLink() {
-        var text = window.location.href;
-        document.getElementById('shareBtn').setAttribute('data-a2a-url', text);
-      }
+    var text = window.location.href;
+
+    // Set the dynamic link for the share button
+    document.getElementById('shareBtn').setAttribute('data-a2a-url', text);
+
+    // Update social media links with the current page URL
+    var instagramLink = document.querySelector('.a2a_button_instagram');
+    var tiktokLink = document.querySelector('.a2a_button_tiktok');
+    var youtubeLink = document.querySelector('.a2a_button_youtube');
+
+    // Set the URLs with current page URL
+    if (instagramLink) {
+        instagramLink.setAttribute('href', 'https://www.instagram.com/syruvia_official?share=' + encodeURIComponent(text));
+    }
+    if (tiktokLink) {
+        tiktokLink.setAttribute('href', 'https://www.tiktok.com/@syruviaofficial?share=' + encodeURIComponent(text));
+    }
+    if (youtubeLink) {
+        youtubeLink.setAttribute('href', 'https://www.youtube.com/@Syruvia?share=' + encodeURIComponent(text));
+    }
+}
 
       function setClickable() {
         var lineMeElements = document.querySelectorAll('.new-ingredient li .line-me');

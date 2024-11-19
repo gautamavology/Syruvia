@@ -492,12 +492,12 @@
   </div>
 </article>
 {% assign products_handle = article.metafields.custom.blog_post_exploring_seasonal_syrup_blends.value %}
-
+<!-- <h2>Related Products</h2> -->
 {% if products_handle %}
   {% assign products = products_handle %}
   
 <div class="slick-sliderrt">
-<h2>Related Products</h2>
+
   {% for product in products limit: 10 %}
    <div>
      <div class="slick-sliderrt-content  {% assign colorIndex = forloop.index0 | modulo: 4 %}{% if colorIndex == 0 %}colorone{% elsif colorIndex == 1 %}colortwo{% elsif colorIndex == 2 %}colorthree{% elsif colorIndex == 3 %}colorfour{% endif %}">
