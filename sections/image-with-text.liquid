@@ -1,5 +1,5 @@
 {{ 'component-image-with-text.css' | asset_url | stylesheet_tag }}
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 {%- style -%}
       .section-{{ section.id }}-padding {
         padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
@@ -134,6 +134,47 @@
                       ></span>
                     </a>
                   {%- endif -%}
+               
+  {%- when 'custom_social_block' -%}
+    <div class="custom-social-block">
+      {% if block.settings.heading != blank %}
+        <h3 class="social-block-heading">{{ block.settings.heading }}</h3>
+      {% endif %}
+      {% if block.settings.content != blank %}
+        <p class="social-block-content">{{ block.settings.content }}</p>
+      {% endif %}
+      <!-- <a
+        href="{{ block.settings.social_link }}"
+        target="_blank"
+        class="social-icon-link"
+        rel="noopener noreferrer"
+      >
+        {% if block.settings.custom_icon != blank %}
+          <img
+            src="{{ block.settings.custom_icon | img_url: 'small' }}"
+            alt="{{ block.settings.icon_label }}"
+            class="dynamic-social-icon"
+          >
+        {% else %}
+         
+        {% endif %}
+        <span class="icon-label">{{ block.settings.icon_label }}</span>
+      </a> -->
+      <div class="social-buttons">
+    <a class="social-btn a2a_button_instagram" href="https://www.instagram.com/syruvia_official" target="_blank">
+        <i class="fa-brands fa-instagram"></i>
+    </a>
+    <a class="social-btn a2a_button_tiktok" href="https://www.tiktok.com/@syruviaofficial" target="_blank">
+        <i class="fa-brands fa-tiktok"></i>
+    </a>
+    <a class="social-btn a2a_button_youtube" href="https://www.youtube.com/@Syruvia" target="_blank">
+        <i class="fa-brands fa-youtube"></i>
+    </a>
+</div>
+    </div>
+
+
+
               {%- endcase -%}
             {%- endfor -%}
           </div>
@@ -142,6 +183,29 @@
     </div>
   </div>
 </div>
+<script>
+  function setLink() {
+      var text = window.location.href;
+
+      // Set the dynamic link for all social buttons at once
+      document.querySelectorAll('.social-btn').forEach(function(button) {
+          var url = button.getAttribute('href');
+          var encodedUrl = encodeURIComponent(text);
+
+          // Update the social media URL with the current page URL
+          if (url.includes('instagram.com')) {
+              button.setAttribute('href', 'https://www.instagram.com/syruvia_official?share=' + encodedUrl);
+          } else if (url.includes('tiktok.com')) {
+              button.setAttribute('href', 'https://www.tiktok.com/@syruviaofficial?share=' + encodedUrl);
+          } else if (url.includes('youtube.com')) {
+              button.setAttribute('href', 'https://www.youtube.com/@Syruvia?share=' + encodedUrl);
+          }
+      });
+  }
+
+  // Call setLink after the page loads
+  window.onload = setLink;
+</script>
 
 {% schema %}
 {
@@ -512,7 +576,39 @@
           "label": "t:sections.image-with-text.blocks.button.settings.outline_button.label"
         }
       ]
+    },
+    {
+  "type": "custom_social_block",
+  "name": "Custom Social Block",
+  "settings": [
+    {
+      "type": "url",
+      "id": "social_link",
+      "label": "Social Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_icon",
+      "label": "Custom Social Icon"
+    },
+    {
+      "type": "text",
+      "id": "icon_label",
+      "label": "Icon Label"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Content"
     }
+  ]
+}
+
   ],
   "presets": [
     {

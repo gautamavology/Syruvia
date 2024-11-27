@@ -36,7 +36,7 @@
   }
 {%- endstyle -%}
 
-<div class="{{ section.settings.custom_class }} isolate{% unless section.settings.full_width %} page-width{% endunless %}">
+<div id="{{ section.settings.custom_id }}" class="{{ section.settings.custom_class }} isolate{% unless section.settings.full_width %} page-width{% endunless %}">
   <div class="rich-text mobile-pad content-container color-{{ section.settings.color_scheme }} gradient{% if section.settings.full_width %} rich-text--full-width content-container--full-width{% endif %} section-{{ section.id }}-padding">
     <div
       class="rich-text__wrapper rich-text__wrapper--{{ section.settings.desktop_content_position }}{% if section.settings.full_width %} page-width{% endif %}"
@@ -125,7 +125,7 @@
               <img
                 src="{{ block.settings.image | img_url: '1024x1024' }}"
                 alt="{{ block.settings.alt_text }}"
-                class="rich-text__image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                class="{{ block.settings.custom_imgclass }} rich-text__image{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {{ block.shopify_attributes }}
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
@@ -198,6 +198,16 @@
       "type": "text",
       "id": "custom_class",
       "label": "Custom class"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom id main"
+    },
+    {
+      "type": "text",
+      "id": "custom_imgclass",
+      "label": "Custom image Class"
     },
     {
       "type": "text",
@@ -508,7 +518,12 @@
           "id": "alt_text",
           "label": "Alt Text",
           "default": "Image description"
-        }
+        },
+        {
+      "type": "text",
+      "id": "custom_imgclass",
+      "label": "Custom image Class"
+    },
       ]
     },
      {

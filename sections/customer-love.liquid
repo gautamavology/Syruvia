@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <section class="customer-love-section">
   <div class="cst-custm-lovesec-new">
     <span>
@@ -13,23 +14,74 @@
     <h1>Customer Love</h1>
   </div>
   <div class="product-grid">
-  {% assign class_toggle = 0 %}
-  {% assign block_index = 0 %}
-  {% for block in section.blocks %}
-    {% case block.type %}
-      {% when 'product_block' %}
-        {% assign product = all_products[block.settings.selected_product] %}
-        {% if product %}
-          <div class="cst-custom-product-crd cards product-item" data-index="{{ block_index }}" {% if block_index >= 12 %}style="display:none;"{% endif %}>
-            <div class="product-card {% if class_toggle == 0 %}yellow{% else %}red{% endif %}">
-              <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}">
-              <div class="cst-custom-produt-constent">
-                <h2>{{ product.title }}</h2>
-                <div class="areviews_product_item areviews_stars{{ product.id }}" data-product-id="{{ product.id }}"></div>
-                <p>{{ product.description | strip_html | truncate: 100 }}</p>
+    {% assign class_toggle = 0 %}
+    {% assign block_index = 0 %}
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'product_block' %}
+          {% assign product = all_products[block.settings.selected_product] %}
+          {% if product %}
+            <div
+              class="cst-custom-product-crd cards product-item"
+              data-index="{{ block_index }}"
+              {% if block_index >= 12 %}
+                style="display:none;"
+              {% endif %}
+            >
+              <div class="product-card {% if class_toggle == 0 %}yellow{% else %}red{% endif %}">
+                <img src="{{ product.featured_image | img_url: 'master' }}" alt="{{ product.title }}">
+                <div class="cst-custom-produt-constent">
+                  <h2>{{ product.title }}</h2>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+
+                  {% if block.settings.custom_review %}
+                    {% for i in (1..block.settings.custom_review) %}
+                      <i style="margin-left: 2px; color:#000;" class="fas fa-star" aria-hidden="true"></i>
+                    {% endfor %}
+                  {% endif %}
+                  {% comment %}
+                    <p>{{ product.description | strip_html | truncate: 100 }}</p>
+                  {% endcomment %}
+                  <p>{{ block.settings.customreview_text | strip_html | truncate: 100 }}</p>
+                </div>
+              </div>
+              <div class="cst-btn ">
+                <a href="{{ product.url }}" class="button">
+                  Shop Now
+                  <span class="cst-custom-arrow">
+                    <img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/arroww.png?v=1728394015">
+                  </span>
+                </a>
               </div>
             </div>
-            <div class="cst-btn ">
+          {% endif %}
+        {% when 'media_block' %}
+          <div
+            class="product-card cards product-item"
+            data-index="{{ block_index }}"
+            {% if block_index >= 12 %}
+              style="display:none;"
+            {% endif %}
+          >
+            <video class="myVideo" width="100%" height="100%" controls loop>
+              <source src="{{ block.settings.media_video.sources[1].url }}" type="video/mp4">
+            </video>
+            <div class="play-btn" id="playButton">
+              <span>
+                <img
+                  src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/play.png?v=1728393076"
+                  class="img-fluid"
+                  alt="bottle"
+                >
+              </span>
+            </div>
+            <h2>{{ block.settings.video_title }}</h2>
+            <div class="cst-btn">
               <a href="{{ product.url }}" class="button">
                 Shop Now
                 <span class="cst-custom-arrow">
@@ -38,52 +90,31 @@
               </a>
             </div>
           </div>
-        {% endif %}
-      {% when 'media_block' %}
-        <div class="product-card cards product-item" data-index="{{ block_index }}" {% if block_index >= 12 %}style="display:none;"{% endif %}>
-          <video class="myVideo" width="100%" height="100%" controls loop>
-            <source src="{{ block.settings.media_video.sources[1].url }}" type="video/mp4">
-          </video>
-          <div class="play-btn" id="playButton">
-            <span>
-              <img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/play.png?v=1728393076" class="img-fluid" alt="bottle">
-            </span>
-          </div>
-          <h2>{{ block.settings.video_title }}</h2>
-          <div class="cst-btn">
-            <a href="{{ product.url }}" class="button">
-              Shop Now
-              <span class="cst-custom-arrow">
-                <img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/arroww.png?v=1728394015">
-              </span>
-            </a>
-          </div>
-        </div>
-        {% assign class_toggle = class_toggle | plus: 1 %}
-        {% assign class_toggle = class_toggle | modulo: 2 %}
-    {% endcase %}
-    {% assign block_index = block_index | plus: 1 %}
-  {% endfor %}
-</div>
-<script>
-  $(document).ready(function(){
-      $('.play-btn').click(function() {
-          // Pause all videos first
-          $('video').each(function() {
-              this.pause();  // Pause the video
-              this.controls = false;  // Hide controls for all other videos
-          });
+          {% assign class_toggle = class_toggle | plus: 1 %}
+          {% assign class_toggle = class_toggle | modulo: 2 %}
+      {% endcase %}
+      {% assign block_index = block_index | plus: 1 %}
+    {% endfor %}
+  </div>
+  <script>
+    $(document).ready(function(){
+        $('.play-btn').click(function() {
+            // Pause all videos first
+            $('video').each(function() {
+                this.pause();  // Pause the video
+                this.controls = false;  // Hide controls for all other videos
+            });
 
-          // Play the clicked video
-          var video = $(this).siblings('video')[0];
-          video.play();
-          video.controls = true;  // Show controls for the clicked video
+            // Play the clicked video
+            var video = $(this).siblings('video')[0];
+            video.play();
+            video.controls = true;  // Show controls for the clicked video
 
-          // Hide the play button
-          $(this).hide();
-      });
-  });
-</script>
+            // Hide the play button
+            $(this).hide();
+        });
+    });
+  </script>
   <div class="cst-btn customer-llove-btn">
     <a href="/collections" class="button">
       View More
@@ -128,6 +159,20 @@
           "type": "product",
           "id": "selected_product",
           "label": "Select a product"
+        },
+        {
+          "type": "richtext",
+          "id": "customreview_text",
+          "label": "Review text"
+        },
+        {
+          "type": "range",
+          "id": "custom_review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
         }
       ]
     },

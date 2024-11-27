@@ -57,6 +57,15 @@
 
 <div class="{{ section.settings.custom_class }} color-{{ section.settings.color_scheme }} gradient">
   <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
+     {%- if section.settings.top_image != blank -%}
+      <div class="form-top-image">
+        <img 
+          src="{{ section.settings.top_image | img_url: 'large' }}" 
+          alt="{{ section.settings.top_image_alt | escape }}" 
+          class="form-heading-image"
+        />
+      </div>
+    {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2 class="title {{ section.settings.heading_size }}">
         {{ section.settings.heading }}
@@ -69,53 +78,49 @@
       {%- elsif form.errors -%}
         <p class="error-message">There was an issue with your submission. Please correct the errors and try again.</p>
       {%- endif -%}
-
+      <div class="cstm-fields">
       <!-- Name Field -->
       <div class="form-group">
-        <label for="contact-name">Your Name</label>
         <input
           class="form-control"
           type="text"
           id="contact-name"
           name="contact[name]"
-          placeholder="Enter your name"
+          placeholder="Name*"
           required
         />
       </div>
 
       <!-- Email Field -->
       <div class="form-group">
-        <label for="contact-email">Your Email</label>
         <input
           class="form-control"
           type="email"
           id="contact-email"
           name="contact[email]"
-          placeholder="Enter your email"
+          placeholder="Email*"
           required
         />
       </div>
-
+      </div>
       <!-- Country Field -->
       <div class="form-group">
-        <label for="contact-country">Your Country</label>
         <input
           class="form-control"
           type="text"
           id="contact-country"
           name="contact[country]"
-          placeholder="Enter your country"
+          placeholder="Country"
         />
       </div>
 
       <!-- Message Field -->
       <div class="form-group">
-        <label for="contact-message">Your Message</label>
         <textarea
           class="form-control"
           id="contact-message"
           name="contact[body]"
-          placeholder="Write your message"
+          placeholder="Message"
           rows="5"
           required
         ></textarea>
@@ -144,7 +149,17 @@
     </div>
   </div>
 </div>
-
+<div class="dis-form-bg-imgs">
+  <img class="form-img1" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object_copy_3.png?v=1732082325">
+  <img class="form-img2" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object6_1b253e27-b675-40d7-bd38-b4d9adc0aa3b.png?v=1732082377">
+  <img class="form-img3" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object4_7bd18785-e689-4441-919b-43e8c0312faa.png?v=1732082478">
+  <img class="form-img4" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object5_01721dbf-1423-427d-8466-f8a0d0479837.png?v=1732082500">
+</div>
+<div class="dis-form-mobbg-imgs">
+  <img class="form-mobimg1" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object2_1_8466e10f-16cf-49bd-b992-55c70d1836e7.png?v=1732083133">
+  <img class="form-mobimg2" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object_copy4.png?v=1732083178">
+  <img class="form-mobimg3" src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object4_7bd18785-e689-4441-919b-43e8c0312faa.png?v=1732082478">
+</div>
 {% schema %}
 {
   "name": "Distribution Contact Form",
@@ -159,6 +174,17 @@
       "type": "text",
       "id": "custom_class",
       "label": "Custom CSS Class"
+    },
+    {
+      "type": "image_picker",
+      "id": "top_image",
+      "label": "Top Image"
+    },
+    {
+      "type": "text",
+      "id": "top_image_alt",
+      "label": "Top Image Alt Text",
+      "default": "Form Top Image"
     },
     {
       "type": "select",
@@ -218,4 +244,3 @@
   ]
 }
 {% endschema %}
-

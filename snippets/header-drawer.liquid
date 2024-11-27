@@ -60,14 +60,12 @@
                           disabled
                         {% endif %}
                       >
-     <a
-  href="{% if link.links == blank %}/pages/recipe{% else %}#{% endif %}"
-  class="{% if link.links == blank %}no-tabs{% endif %} parent-menu-link"
-  data-tab="tab-{{ forloop.index }}"
->
-  {{- link.title | escape -}}
-
-
+                        <a
+                          href="{% if link.links == blank %}/pages/recipe{% else %}#{% endif %}"
+                          class="{% if link.links == blank %}no-tabs{% endif %} parent-menu-link"
+                          data-tab="tab-{{ forloop.index }}"
+                        >
+                          {{- link.title | escape -}}
 
                           <span class="menu-drawer-svg-only">
                             <svg
@@ -82,10 +80,7 @@
                           </span>
                         </a>
                         <div class="tabs_scrolbar">
-                          <ul
-                            class="tabs"
-                            style="display: none;"
-                          >
+                          <ul class="tabs" style="display: none;">
                             {%- for childlink in link.links -%}
                               <li
                                 class="tab {% if forloop.index == 1 %}current{% endif %}"
@@ -104,43 +99,179 @@
                             {%- for link in section.settings.menu.links -%}
                               {%- for childlink in link.links -%}
                                 {%- for grandchildlink in childlink.links -%}
-                                  <li class="{{ childlink.title | handleize }}">
-                                     <a href="{{ grandchildlink.url | escape }}" class="link">
-                                    {%- assign collection_handle = grandchildlink.handle -%}
-                                    {%- assign collection = collections[collection_handle] -%}
-                                    {%- assign product_handle = grandchildlink.handle -%}
-                                    {%- assign product = all_products[product_handle] -%}
+                                  {% if childlink.handle == 'recipes' %}
+                                    {% assign grandchild_title_downcase = grandchildlink.title
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_1 = recipe_title_1
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_2 = recipe_title_2
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_3 = recipe_title_3
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_4 = recipe_title_4
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_5 = recipe_title_5
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
+                                    {% assign normalized_recipe_title_6 = recipe_title_6
+                                      | downcase
+                                      | replace: ' ', ''
+                                    %}
 
-                               {% if collection and collection.image %}
-  <!-- Collection Featured Image -->
-  <img
-    src="{{ collection.image | img_url: 'master' }}"
-    alt="{{ collection.title | escape }}"
-  >
-{% elsif collection and collection.products.size > 0 and collection.products.first.images.size > 0 %}
-  <!-- First Image from the First Product in the Collection -->
-  <img
-    src="{{ collection.products.first.images.first | img_url: 'master' }}"
-    alt="{{ collection.products.first.title | escape }}"
-  >
-{% elsif product and product.images.size > 0 %}
-  <!-- First Product Image -->
-  <img
-    src="{{ product.images.first | img_url: 'master' }}"
-    alt="{{ product.title | escape }}"
-  >
-{% else %}
-  <!-- Fallback Image -->
-  <img
-    src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Untitled-5.png?v=1729167448"
-    alt="No Image Available"
-  >
-{% endif %}
+                                    {% if grandchild_title_downcase == normalized_recipe_title_1 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_1 | img_url:'master' }}">
+                                          {{ recipe_title_1 }}
+                                        </a>
+                                      </li>
+                                    {% elsif grandchild_title_downcase == normalized_recipe_title_2 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_2 | img_url:'master' }}">
+                                          {{ recipe_title_2 }}
+                                        </a>
+                                      </li>
+                                    {% elsif grandchild_title_downcase == normalized_recipe_title_3 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_3 | img_url:'master' }}">
+                                          {{ recipe_title_3 }}
+                                        </a>
+                                      </li>
+                                    {% elsif grandchild_title_downcase == normalized_recipe_title_4 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_4 | img_url:'master' }}">
+                                          {{ recipe_title_4 }}
+                                        </a>
+                                      </li>
+                                    {% elsif grandchild_title_downcase == normalized_recipe_title_5 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_5 | img_url:'master' }}">
+                                          {{ recipe_title_5 }}
+                                        </a>
+                                      </li>
+                                    {% elsif grandchild_title_downcase == normalized_recipe_title_6 %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img src="{{ recipe_image_6 | img_url:'master' }}">
+                                          {{ recipe_title_6 }}
+                                        </a>
+                                      </li>
+                                    {% else %}
+                                      <li
+                                        class="{{ childlink.handle | handleize }}"
+                                        title="{{ grandchild_title_downcase }}"
+                                      >
+                                        <a href="{{ grandchildlink.url | escape }}" class="link">
+                                          <img
+                                            src="//8giloyhhdanxbcdu-86111060252.shopifypreview.com/cdn/shopifycloud/shopify/assets/no-image-2048-5e88c1b20e087fb7bbe9a3771824e743c244f437e4f8ba93bbf7b11b53f7824c.gif"
+                                          >
+                                          No Found
+                                        </a>
+                                      </li>
+                                    {% endif %}
+                                  {% else %}
+                                    <!--  -->
+                                    <li class="{{ childlink.handle | handleize }}">
+                                      <a href="{{ grandchildlink.url | escape }}" class="link">
+                                        {% comment %} Extract the handle from the URL {% endcomment %}
+                                        {% assign url_parts = grandchildlink.url | split: '/' %}
+                                        {% assign last_part = url_parts.last %}
 
+                                        <!-- Check if the link is a collection -->
+                                        {% assign collection = collections[last_part] %}
+                                        {% if collection %}
+                                          {% if collection.metafields.custom.promotion_video_or_image != blank %}
+                                            <!-- Collection Metafield Image -->
+                                            <img
+                                              src="{{ collection.metafields.custom.promotion_video_or_image | img_url: 'master' }}"
+                                              alt="{{ collection.title | escape }}"
+                                            >
+                                          {% elsif collection.products.size > 0 %}
+                                            {% assign first_product = collection.products.first %}
+                                            {% if first_product.images.size > 0 %}
+                                              <!-- First Image from the First Product in the Collection -->
+                                              <img
+                                                src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Shop_All.png?v=1732197355"
+                                                alt="{{ first_product.title | escape }}"
+                                              >
+                                            {% else %}
+                                              <!-- Fallback Image if collection has no images -->
+                                              <img
+                                                src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Shop_All.png?v=1732197355"
+                                                alt="No Image Available"
+                                              >
+                                            {% endif %}
+                                          {% else %}
+                                            <!-- Fallback Image if collection has no products or images -->
+                                            <img
+                                              src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Untitled-5.png?v=1729167448"
+                                              alt="No Image Available"
+                                            >
+                                          {% endif %}
+                                        {% else %}
+                                          <!-- If not a collection, check if it's a product -->
+                                          {% assign product = all_products[last_part] %}
+                                          {% if product %}
+                                            {% if product.images.size > 0 %}
+                                              <!-- First Product Image -->
+                                              <img
+                                                src="{{ product.images.first | img_url: 'master' }}"
+                                                alt="{{ product.title | escape }}"
+                                              >
+                                            {% else %}
+                                              <!-- Fallback Image if no product image -->
+                                              <img
+                                                src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Untitled-5.png?v=1729167448"
+                                                alt="No Image Available"
+                                              >
+                                            {% endif %}
+                                          {% else %}
+                                            <!-- Fallback Image if no valid collection or product -->
+                                            <img
+                                              src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Shop_All.png?v=1732197355"
+                                              alt="No Image Available"
+                                            >
+                                          {% endif %}
+                                        {% endif %}
 
-                                      {{- grandchildlink.title | escape -}}
-                                    </a>
-                                  </li>
+                                        {{- grandchildlink.title | escape -}}
+                                        <!-- Display the link title -->
+                                      </a>
+                                    </li>
+                                  {% endif %}
                                 {% endfor %}
                               {% endfor %}
                             {% endfor %}
@@ -155,102 +286,102 @@
           </nav>
 
           <script>
-                 // JavaScript to handle tab and submenu display
-            document.addEventListener("DOMContentLoaded", function () {
-                const parentMenuLinks = document.querySelectorAll(".parent-menu-link");
+                             // JavaScript to handle tab and submenu display
+                        document.addEventListener("DOMContentLoaded", function () {
+                            const parentMenuLinks = document.querySelectorAll(".parent-menu-link");
 
-                // Attach click event to parent menu links
-                parentMenuLinks.forEach((link) => {
-                    link.addEventListener("click", function (event) {
-                        event.preventDefault(); // Prevent default link behavior
+                            // Attach click event to parent menu links
+                            parentMenuLinks.forEach((link) => {
+                                link.addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent default link behavior
 
-                        // Hide all tabs and submenus initially
-                        const allTabs = document.querySelectorAll(".tabs");
-                        allTabs.forEach((tab) => {
-                            tab.style.display = "none";
-                        });
+                                    // Hide all tabs and submenus initially
+                                    const allTabs = document.querySelectorAll(".tabs");
+                                    allTabs.forEach((tab) => {
+                                        tab.style.display = "none";
+                                    });
 
-                        const allSubmenus = document.querySelectorAll(".submenu");
-                        allSubmenus.forEach((submenu) => {
-                            submenu.style.display = "block";
-                        });
+                                    const allSubmenus = document.querySelectorAll(".submenu");
+                                    allSubmenus.forEach((submenu) => {
+                                        submenu.style.display = "block";
+                                    });
 
-                        // Show the corresponding tab and its submenu
-                        const tabsScrollbar = this.nextElementSibling; // Select <div class="tabs_scrolbar">
-                        if (tabsScrollbar && tabsScrollbar.classList.contains("tabs_scrolbar")) {
-                            const tabToShow = tabsScrollbar.querySelector(".tabs"); // Find the .tabs within the scrollbar div
-                            if (tabToShow) {
-                                tabToShow.style.display = "block"; // Show the tabs
-                            }
-                        }
-                    });
-                });
+                                    // Show the corresponding tab and its submenu
+                                    const tabsScrollbar = this.nextElementSibling; // Select <div class="tabs_scrolbar">
+                                    if (tabsScrollbar && tabsScrollbar.classList.contains("tabs_scrolbar")) {
+                                        const tabToShow = tabsScrollbar.querySelector(".tabs"); // Find the .tabs within the scrollbar div
+                                        if (tabToShow) {
+                                            tabToShow.style.display = "block"; // Show the tabs
+                                        }
+                                    }
+                                });
+                            });
 
-                // Handle tab link clicks to display specific submenus
-                const tabLinks = document.querySelectorAll(".tab-link");
+                            // Handle tab link clicks to display specific submenus
+                            const tabLinks = document.querySelectorAll(".tab-link");
 
-                tabLinks.forEach((tabLink) => {
-                    tabLink.addEventListener("click", function (event) {
-                        event.preventDefault(); // Prevent default link behavior
+                            tabLinks.forEach((tabLink) => {
+                                tabLink.addEventListener("click", function (event) {
+                                    event.preventDefault(); // Prevent default link behavior
 
-                        // Hide all submenus in this parent menu
-                        const allSubmenus = this.closest(".parent-menu").querySelectorAll(".submenu");
-                        allSubmenus.forEach((submenu) => {
-                            submenu.style.display = "none"; // Hide all submenus
-                        });
+                                    // Hide all submenus in this parent menu
+                                    const allSubmenus = this.closest(".parent-menu").querySelectorAll(".submenu");
+                                    allSubmenus.forEach((submenu) => {
+                                        submenu.style.display = "none"; // Hide all submenus
+                                    });
 
-                        // Show the corresponding submenu related to the clicked tab
-                        const currentTab = this.closest(".tab");
-                        if (currentTab) {
-                            const submenuToShow = this.closest(".tabs_scrolbar").nextElementSibling; // Get the submenu after the tabs_scrolbar div
-                            if (submenuToShow) {
-                                submenuToShow.style.display = "block"; // Show submenu
-                            }
-                        }
-                    });
-                });
-                $("ul.tabs li").click(function () {
-                    var test = $(this).attr("link-menu");
-                    console.log(test);
-                    setTimeout(function () {
-                        $(".grandchild-submenu li").hide();
-                        $(".grandchild-submenu li." + test).show();
-                        //console.log(".grandchild-submenu li." + test);
-                    }, 0);
-                });
-                $(".no-tabs").click(function () {
-                    $(this).siblings().hide();
-                });
-
-
-                $("ul.parent-menu-list li").click(function () {
-    // Check if the clicked item does not have the 'active' class
-    if (!$(this).hasClass("active")) {
-        // Remove 'active' class from all and hide siblings
-        $("ul.parent-menu-list li").removeClass("active");
-        $("ul.parent-menu-list li").siblings().hide();
-    }
-
-    // Toggle the 'active' class for the clicked item
-    $(this).toggleClass("active");
-
-    // Handle links based on the presence of the 'no-tabs' class
-    var linkElement = $(this).find(".parent-menu-link");
-    if (linkElement.hasClass("no-tabs")) {
-        window.location.href = "/pages/recipe"; // Redirect to '/pages/recipe' if no-tabs is present
-    }
-
-    // Show siblings
-    $("ul.parent-menu-list li").siblings().show();
-
-    // Handle grandchild menu visibility
-    var clicktarget = $(this).find(".current").attr("link-menu");
-    $(".grandchild-submenu li").hide();
-    $(".grandchild-submenu li." + clicktarget).show();
-});
+                                    // Show the corresponding submenu related to the clicked tab
+                                    const currentTab = this.closest(".tab");
+                                    if (currentTab) {
+                                        const submenuToShow = this.closest(".tabs_scrolbar").nextElementSibling; // Get the submenu after the tabs_scrolbar div
+                                        if (submenuToShow) {
+                                            submenuToShow.style.display = "block"; // Show submenu
+                                        }
+                                    }
+                                });
+                            });
+                            $("ul.tabs li").click(function () {
+                                var test = $(this).attr("link-menu");
+                                console.log(test);
+                                setTimeout(function () {
+                                    $(".grandchild-submenu li").hide();
+                                    $(".grandchild-submenu li." + test).show();
+                                    //console.log(".grandchild-submenu li." + test);
+                                }, 0);
+                            });
+                            $(".no-tabs").click(function () {
+                                $(this).siblings().hide();
+                            });
 
 
+                            $("ul.parent-menu-list li").click(function () {
+                // Check if the clicked item does not have the 'active' class
+                if (!$(this).hasClass("active")) {
+                    // Remove 'active' class from all and hide siblings
+                    $("ul.parent-menu-list li").removeClass("active");
+                    $("ul.parent-menu-list li").siblings().hide();
+                }
+
+                // Toggle the 'active' class for the clicked item
+                $(this).toggleClass("active");
+
+                // Handle links based on the presence of the 'no-tabs' class
+                var linkElement = $(this).find(".parent-menu-link");
+                if (linkElement.hasClass("no-tabs")) {
+                    window.location.href = "/pages/recipe"; // Redirect to '/pages/recipe' if no-tabs is present
+                }
+
+                // Show siblings
+                $("ul.parent-menu-list li").siblings().show();
+
+                // Handle grandchild menu visibility
+                var clicktarget = $(this).find(".current").attr("link-menu");
+                $(".grandchild-submenu li").hide();
+                $(".grandchild-submenu li." + clicktarget).show();
             });
+
+
+                        });
           </script>
 
           <div class="cst-custom-drawer-menu">

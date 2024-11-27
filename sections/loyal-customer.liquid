@@ -70,10 +70,19 @@
                   </a>
                 </div>
                 <div class="cst-custom-product-content">
-                  <div
-                    class="areviews_product_item areviews_stars{{ product.id }}"
-                    data-product-id="{{ product.id }}"
-                  ></div>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+                  <div class="areviews_rating" style="margin-top: 5px;">
+                    {% if block.settings.review %}
+                      {% for i in (1..block.settings.review) %}
+                        <i style="margin-left: 2px; color:#b85423;" class="fas fa-star" aria-hidden="true"></i>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
                   <h3>{{ product.title }}</h3>
                   <p>{{ block.settings.product_description }}</p>
                 </div>
@@ -119,10 +128,19 @@
                   </a>
                 </div>
                 <div class="cst-custom-product-content">
-                  <div
-                    class="areviews_product_item areviews_stars{{ product.id }}"
-                    data-product-id="{{ product.id }}"
-                  ></div>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+                  <div class="areviews_rating" style="margin-top: 5px;">
+                    {% if block.settings.review %}
+                      {% for i in (1..block.settings.review) %}
+                        <i style="margin-left: 2px; color:#b85423;" class="fas fa-star" aria-hidden="true"></i>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
                   <h3>{{ product.title }}</h3>
                   <p>{{ block.settings.product_description }}</p>
                 </div>
@@ -168,10 +186,19 @@
                   </a>
                 </div>
                 <div class="cst-custom-product-content">
-                  <div
-                    class="areviews_product_item areviews_stars{{ product.id }}"
-                    data-product-id="{{ product.id }}"
-                  ></div>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+                  <div class="areviews_rating" style="margin-top: 5px;">
+                    {% if block.settings.review %}
+                      {% for i in (1..block.settings.review) %}
+                        <i style="margin-left: 2px; color:#b85423;" class="fas fa-star" aria-hidden="true"></i>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
                   <h3>{{ product.title }}</h3>
                   <p>{{ block.settings.product_description }}</p>
                 </div>
@@ -217,10 +244,19 @@
                   </a>
                 </div>
                 <div class="cst-custom-product-content">
-                  <div
-                    class="areviews_product_item areviews_stars{{ product.id }}"
-                    data-product-id="{{ product.id }}"
-                  ></div>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+                  <div class="areviews_rating" style="margin-top: 5px;">
+                    {% if block.settings.review %}
+                      {% for i in (1..block.settings.review) %}
+                        <i style="margin-left: 2px; color:#b85423;" class="fas fa-star" aria-hidden="true"></i>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
                   <h3>{{ product.title }}</h3>
                   <p>{{ block.settings.product_description }}</p>
                 </div>
@@ -266,10 +302,19 @@
                   </a>
                 </div>
                 <div class="cst-custom-product-content">
-                  <div
-                    class="areviews_product_item areviews_stars{{ product.id }}"
-                    data-product-id="{{ product.id }}"
-                  ></div>
+                  {% comment %}
+                    <div
+                      class="areviews_product_item areviews_stars{{ product.id }}"
+                      data-product-id="{{ product.id }}"
+                    ></div>
+                  {% endcomment %}
+                  <div class="areviews_rating" style="margin-top: 5px;">
+                    {% if block.settings.review %}
+                      {% for i in (1..block.settings.review) %}
+                        <i style="margin-left: 2px; color:#b85423;" class="fas fa-star" aria-hidden="true"></i>
+                      {% endfor %}
+                    {% endif %}
+                  </div>
                   <h3>{{ product.title }}</h3>
                   <p>{{ block.settings.product_description }}</p>
                 </div>
@@ -481,7 +526,6 @@
     }
   ],
   "blocks": [
-
     {
       "type": "tab1",
       "name": "Tab 1 Content",
@@ -495,6 +539,15 @@
           "type": "text",
           "id": "product_description",
           "label": "product review"
+        },
+        {
+          "type": "range",
+          "id": "review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
         },
         {
           "type": "select",
@@ -532,6 +585,15 @@
           "label": "product review"
         },
         {
+          "type": "range",
+          "id": "review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
+        },
+        {
           "type": "select",
           "id": "media_type",
           "label": "Media Type",
@@ -565,6 +627,15 @@
           "type": "text",
           "id": "product_description",
           "label": "product review"
+        },
+        {
+          "type": "range",
+          "id": "review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
         },
         {
           "type": "select",
@@ -602,6 +673,15 @@
           "label": "product review"
         },
         {
+          "type": "range",
+          "id": "review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
+        },
+        {
           "type": "select",
           "id": "media_type",
           "label": "Media Type",
@@ -619,7 +699,8 @@
           "type": "video",
           "id": "media_video",
           "label": "Review Video URL"
-        }
+        },
+
       ]
     },
     {
@@ -637,6 +718,15 @@
           "label": "product review"
         },
         {
+          "type": "range",
+          "id": "review",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Reviews",
+          "default": 1
+        },
+        {
           "type": "select",
           "id": "media_type",
           "label": "Media Type",
@@ -655,6 +745,7 @@
           "id": "media_video",
           "label": "Review Video URL"
         }
+
       ]
     }
   ],

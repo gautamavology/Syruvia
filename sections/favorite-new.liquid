@@ -65,8 +65,8 @@
     {% endfor %}
   </div>
   <div class="cst-btn">
-    <a href="/collections" class="button">
-      Shop All
+    <a href="{{ section.settings.button_link }}" class="button">
+      {{ section.settings.button_text }}
       <span class="cst-custom-arrow"
         ><img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/arroww.png?v=1728394015"
       ></span>
@@ -211,6 +211,16 @@
         "id": "collection_list",
         "label": "Collections",
         "limit": 8
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button text"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
       }
   ],
   "presets": [

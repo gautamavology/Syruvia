@@ -177,7 +177,9 @@
                   <div class="cst-custom-flat-shipping-option">
                     <div class="cst-custom-flat-shipping-wrap">
                       <div class="cst-custom-flat-shiping-image">
+                        {% if product.metafields.custom.shipping_icon != blank %}
                         <img src="{{block.settings.flat_shipping_image | img_url: 'master'}}">
+                        {% endif %}
                       </div>
                       <div class="cst-custom-flat-shiping-content">
                         {{ block.settings.flat_shipping_text }}
@@ -662,18 +664,30 @@
               {% endcase %}
             {% endfor %}
             <script>
-            $(document).ready(function() {
-              // Attach a click event to each summary element
-              $('details > summary').on('click', function() {
-                var currentDetails = $(this).parent(); // Get the parent <details> element
-            
-                // Close all other details
-                $('details').not(currentDetails).removeAttr('open'); // Remove the "open" attribute from all other accordions
-            
-                // Toggle the current accordion
-                currentDetails.toggleClass('open');
-              });
-            });
+$(document).ready(function() {
+  // Attach a click event to each summary element
+  $('details > summary').on('click', function() {
+    var currentDetails = $(this).parent(); // Get the parent <details> element
+
+    // Check if the current accordion is being closed (i.e., it had 'open' and is now being toggled)
+    var isClosing = currentDetails.prop('open') === false;
+
+    // Close all other details
+    $('details').not(currentDetails).removeAttr('open'); // Remove the "open" attribute from all other accordions
+
+    // Toggle the current accordion's open/close state
+    currentDetails.toggleClass('open');
+
+    // Apply the scroll behavior only if the screen width is 768px or less (mobile)
+    if (isClosing && $(window).width() <= 768) {
+      $('html, body').animate({
+        scrollTop: $('.accordion').offset().top // Replace .accordion with the class or ID of the div you want to scroll to
+      }, 500); // Scroll speed in milliseconds
+    }
+  });
+});
+
+
             </script>
 
             {%- for block in section.blocks -%}
@@ -1075,9 +1089,11 @@
               {% when 'flat-shipping' %}
                 <div class="cst-custom-flat-shipping-option">
                   <div class="cst-custom-flat-shipping-wrap">
-                    <div class="cst-custom-flat-shiping-image">
-                      <img src="{{block.settings.flat_shipping_image | img_url: 'master'}}">
-                    </div>
+                     <div class="cst-custom-flat-shiping-image">
+                        {% if product.metafields.custom.shipping_icon != blank %}
+                        <img src="{{block.settings.flat_shipping_image | img_url: 'master'}}">
+                        {% endif %}
+                      </div>
                     <div class="cst-custom-flat-shiping-content">
                       {{ block.settings.flat_shipping_text }}
                     </div>

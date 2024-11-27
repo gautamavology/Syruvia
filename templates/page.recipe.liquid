@@ -328,13 +328,13 @@ padding-bottom: 21px!important;
     <label for="sortRecipes">Sort by:</label>
     <select id="sortRecipes" class="form-select form-select-sm">
         <option value="most-popular">Most Popular</option>
-        <option value="newest">Newest</option>
+        <!-- <option value="newest">Newest</option> -->
         <option value="a-z">A-Z</option>
         <option value="z-a">Z-A</option>
         <option value="prep-time-shortest">Prep Time (Shortest to Longest)</option>
         <option value="prep-time-longest">Prep Time (Longest to Shortest)</option>
-        <option value="date-old-to-new">Date, old to new</option>
-        <option value="date-new-to-old">Date, new to old</option>
+        <!-- <option value="date-old-to-new">Date, old to new</option>
+        <option value="date-new-to-old">Date, new to old</option> -->
     </select>
 </div>
         </div>
@@ -351,9 +351,11 @@ padding-bottom: 21px!important;
         
       </section>
       <section class="text-center mb-5">
-        <button id="loadMore" class="btn btn-outline-primary btn-lg"></button>
+        <button id="loadMore" class="btn btn-outline-primary btn-lg">Loading...</button>
       </section>
-      
+      <div id="loadingIndicator" class="text-center my-4" style="display: none;">
+    <p>Loading...</p>
+</div>
     </div>
 
     <!-- recipe view section design -->
@@ -477,12 +479,15 @@ padding-bottom: 21px!important;
         })
           .then((response) => response.json())
           .then((data) => {
+            // console.log(data);
             const recipeList = document.getElementById('design1');
-            const loadMoreButton = document.getElementById('loadMore');
+            // const loadMoreButton = document.getElementById('loadMore');
             const pageEntry = document.getElementById('pageEntry');
             const eraseAll = document.getElementById('eraseAllBtn');
             const eraseFilter = document.getElementById('erase-filter');
             const pageKeywordUrl = data.sort_url;
+            
+    const loadingIndicator = document.getElementById('loadingIndicator'); // Loader reference
 
             var allRecipes = data.items;
             var recipes = allRecipes;
@@ -491,7 +496,8 @@ padding-bottom: 21px!important;
             // set pagination
             const itemsPerPage = 9;
             let currentPage = 1;
-
+            let loading = false; // Prevent multiple loads during scroll
+            
             // remder recipes
             function renderRecipes(objRecipes) {
               const startIndex = (currentPage - 1) * itemsPerPage;
@@ -553,24 +559,43 @@ padding-bottom: 21px!important;
                                                   <p class="text-muted">${error_2}</p></div></div>`;
               }
 
-              // check if endIndex is bigger or not for view load more button
-              loadMoreButton.style.display = endIndex < objRecipes.length ? '' : 'none';
+              // // check if endIndex is bigger or not for view load more button
+              // loadMoreButton.style.display = endIndex < objRecipes.length ? '' : 'none';
 
-              // load meta keywords and seo data
-              metaSeoData(false, null, null);
+              // // load meta keywords and seo data
+              // metaSeoData(false, null, null);
+
+              // Hide loader when recipes are rendered
+        loadingIndicator.style.display = 'none';
+        loading = false;
             }
 
+   // Infinite scroll event listener
+    window.addEventListener('scroll', () => {
+        if (!loading && window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+            loading = true; // Set loading state
+            loadingIndicator.style.display = 'block'; // Show loader
+
+            if (currentPage * itemsPerPage < recipes.length) {
+                currentPage++; // Increment page
+                setTimeout(() => renderRecipes(recipes), 1000); // Simulate load delay
+            } else {
+                loadingIndicator.style.display = 'none'; // Hide loader if no more recipes
+            }
+        }
+    });
+            
             // erase all data
             eraseAll.addEventListener('click', function () {
               location.reload();
             });
 
-            function loadMore() {
-              currentPage++;
-              renderRecipes(recipes);
-            }
+            // function loadMore() {
+            //   currentPage++;
+            //   renderRecipes(recipes);
+            // }
 
-            loadMoreButton.addEventListener('click', loadMore);
+            // loadMoreButton.addEventListener('click', loadMore);
 
             renderRecipes(recipes);
 
@@ -845,8 +870,8 @@ function sortRecipes(recipes, criteria) {
     switch (criteria) {
         case 'most-popular':
             return recipes.sort((a, b) => b.popularity - a.popularity); // Assuming popularity is a property
-        case 'newest':
-            return recipes.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date)); // Sort by newest (publish_date)
+        // case 'newest':
+        //     return recipes.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort by newest (publish_date)
         case 'a-z':
             return recipes.sort((a, b) => a.name.localeCompare(b.name));
         case 'z-a':
@@ -855,10 +880,10 @@ function sortRecipes(recipes, criteria) {
             return recipes.sort((a, b) => (a.pt_hh * 60 + a.pt_mm) - (b.pt_hh * 60 + b.pt_mm));
         case 'prep-time-longest':
             return recipes.sort((a, b) => (b.pt_hh * 60 + b.pt_mm) - (a.pt_hh * 60 + a.pt_mm));
-        case 'date-old-to-new':
-            return recipes.sort((a, b) => new Date(a.publish_date) - new Date(b.publish_date)); // Sort by old to new (publish_date)
-        case 'date-new-to-old':
-            return recipes.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date)); // Sort by new to old (publish_date)
+        // case 'date-old-to-new':
+        //     return recipes.sort((a, b) => new Date(a.publish_date) - new Date(b.publish_date)); // Sort by old to new (publish_date)
+        // case 'date-new-to-old':
+        //     return recipes.sort((a, b) => new Date(b.publish_date) - new Date(a.publish_date)); // Sort by new to old (publish_date)
         default:
             return recipes;
     }
@@ -1056,7 +1081,8 @@ sortDropdown.addEventListener('change', function() {
                                                 <p>${recipe.desc ? recipe.desc : ''}</p>
                                                 <div class="recipe-video--making">
                                                 <h3>Create a Video making this Recipe</h3>
-                                                <p>#syruviatoastedmarshmollow</p>
+                                                
+                                                <p>@syruvia</p>
                                                 <div class="recipe-social-icons" id="recipe-social" style="display: none;">
               <div
                 id="shareBtn"
@@ -1082,6 +1108,9 @@ sortDropdown.addEventListener('change', function() {
     <a class="social-btn a2a_button_youtube" href="https://www.youtube.com/@Syruvia" target="_blank">
         <i class="fa-brands fa-youtube"></i>
     </a>
+    <a class="pdf-icon mb-0" onclick="rjPrint()" id="printPDF"
+                ><i class="fa-solid fa-print"></i
+              ></a>
 </div>
 
               </div>
@@ -1303,6 +1332,9 @@ sortDropdown.addEventListener('change', function() {
                    </div>
                    <div class="product-info">
                      <a href="/products/${product.handle}" target="_blank" class="product-title">${product.title}</a>
+                      <!-- Start Areviews product title Rating Code -->
+                    <div class="areviews_header_stars"></div>
+                    <!-- End Areviews product title Rating Code -->
                      <p class="product-price">$${price}</p>
                      <a href="javascript:void(0);" class="add-to-cart-btn btn btn-outline-dark btn-lg button" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" title='<div class="fs-5">${product.title} at price $${price}</div>' data-recipe-id="${recipe.id}" data-product-name="${product.title}" onclick="addToCart(event, ${product.variants[0].id})">Add to cart</a>
                    </div>
@@ -1386,6 +1418,8 @@ sortDropdown.addEventListener('change', function() {
 recipeView.innerHTML += html;
  
 // Initialize the Slick Carousel on the `.slider-recipe-gt` class
+
+
 $('.slider-recipe-gt').slick({
    slidesToShow:4,
       responsive: [
@@ -1425,6 +1459,49 @@ $('.slider-recipe-gt').slick({
         }
       ]
     });
+
+setTimeout(function () {
+  console.log('here');
+   $('.slider-recipe-gt').slick({
+   slidesToShow:4,
+      responsive: [
+        {
+          breakpoint: 1300,
+          settings: {
+            arrows: true,
+            slidesToShow: 4,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 991,
+          settings: {
+            arrows: true,
+            slidesToShow: 2,
+            slidesToScroll:1
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: true,
+              centerMode: true,
+            slidesToShow: 1,
+            slidesToScroll: 1
+         
+          }
+        },
+        {
+          breakpoint: 481,
+          settings: {
+            arrows: true,
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+}, 3000);
 
  
   }

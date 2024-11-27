@@ -180,15 +180,49 @@ a[aria-current="page"] span {
     endif
   -%}
   <header class="header header--{{ section.settings.logo_position }} header--mobile-{{ section.settings.mobile_logo_position }} page-width{% if section.settings.menu_type_desktop == 'drawer' %} drawer-menu{% endif %}{% if section.settings.menu != blank %} header--has-menu{% endif %}{% if has_app_block %} header--has-app{% endif %}{% if social_links %} header--has-social{% endif %}{% if shop.customer_accounts_enabled %} header--has-account{% endif %}{% if localization_forms %} header--has-localizations{% endif %}">
+{%  if section.settings.menu != blank %}
+    {% render 'header-drawer', 
+      recipe_title_1: section.settings.recipe_title_1, 
+      recipe_image_1: section.settings.recipe_image_1, 
+      recipe_title_2: section.settings.recipe_title_2, 
+      recipe_image_2: section.settings.recipe_image_2,
+      recipe_title_3: section.settings.recipe_title_3, 
+      recipe_image_3: section.settings.recipe_image_3, 
+      recipe_title_4: section.settings.recipe_title_4, 
+      recipe_image_4: section.settings.recipe_image_4,
+      recipe_title_5: section.settings.recipe_title_5, 
+      recipe_image_5: section.settings.recipe_image_5, 
+      recipe_title_6: section.settings.recipe_title_6, 
+      recipe_image_6: section.settings.recipe_image_6 %}
+    {% endif %}
+    
+    {% if section.settings.logo_position == 'top-center' or section.settings.menu == blank %}
+ {% render 'header-search', input_id: 'Search-In-Modal-1' %}
+    {% endif %}
+    {% comment %}
     {%- liquid
-      if section.settings.menu != blank
-        render 'header-drawer'
-      endif
+  if section.settings.menu != blank
+    render 'header-drawer', 
+      recipe_title_1: section.settings.recipe_title_1, 
+      recipe_image_1: section.settings.recipe_image_1, 
+      recipe_title_2: section.settings.recipe_title_2, 
+      recipe_image_2: section.settings.recipe_image_2,
+      recipe_title_3: section.settings.recipe_title_3, 
+      recipe_image_3: section.settings.recipe_image_3, 
+      recipe_title_4: section.settings.recipe_title_4, 
+      recipe_image_4: section.settings.recipe_image_4,
+      recipe_title_5: section.settings.recipe_title_5, 
+      recipe_image_5: section.settings.recipe_image_5, 
+      recipe_title_6: section.settings.recipe_title_6, 
+      recipe_image_6: section.settings.recipe_image_6
+  endif
 
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
-      endif
-    -%}
+  if section.settings.logo_position == 'top-center' or section.settings.menu == blank
+    render 'header-search', input_id: 'Search-In-Modal-1'
+  endif
+-%}
+{% endcomment %}
+
 
     {%- if section.settings.logo_position != 'middle-center' -%}
       {%- if request.page_type == 'index' -%}
@@ -344,7 +378,7 @@ a[aria-current="page"] span {
             {% render block %}
         {%- endcase -%}
       {%- endfor -%}
-<a href="#swym-wishlist" class="cst-wislist swym-wishlist" data-swym-loaded="true">
+<a href="/pages/swym-wishlist" class="cst-wislist swym-wishlist" data-swym-loaded="true">
   <svg fill="#713d23" height="28px" width="28px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-47.17 -47.17 566.04 566.04" xml:space="preserve" style="
     width: 30px;
     height: 30px;
@@ -712,6 +746,74 @@ a[aria-current="page"] span {
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Mobile Recipe Images"
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_1",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_1",
+      "label": "Upload Image",
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_2",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_2",
+      "label": "Upload Image",
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_3",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_3",
+      "label": "Upload Image",
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_4",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_4",
+      "label": "Upload Image",
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_5",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_5",
+      "label": "Upload Image",
+    },
+    {
+      "type": "text",
+      "id": "recipe_title_6",
+      "label": "Recipe name"
+    },
+    {
+      "type": "image_picker",
+      "id": "recipe_image_6",
+      "label": "Upload Image",
+    },
+    {
+      "type": "header",
+      "content": "Menu deal content"
     },
      {
       "type": "image_picker",

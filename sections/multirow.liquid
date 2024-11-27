@@ -42,14 +42,14 @@
   endunless
 -%}
 
-<div class="multirow section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }} {{ section.settings.custom_class }}">
+<div id="{{ section.settings.custom_id }}" class="multirow section-{{ section.id }}-padding gradient color-{{ section.settings.section_color_scheme }} {{ section.settings.custom_class }} ">
   <div class="multirow__inner page-width">
     {% if section.settings.top_heading != blank %}
       <h2 class="multirow__top-heading">{{ section.settings.top_heading }}</h2>
     {% endif %}
     {%- for block in section.blocks -%}
       <div
-        class="image-with-text isolate{{ borders_class }}{{ corners_class }}{{ padding_class }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+        class="{{ section.settings.custom_classrow }} image-with-text isolate{{ borders_class }}{{ corners_class }}{{ padding_class }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
         {{ block.shopify_attributes }}
       >
         <div class="image-with-text__grid grid grid--gapless grid--1-col grid--{% if section.settings.desktop_image_width == 'medium' %}2-col-tablet{% else %}3-col-tablet{% endif %}{% if section.settings.image_layout contains 'alternate' %}{% cycle odd_class, even_class %}{% else %}{{ odd_class }}{% endif %}">
@@ -112,22 +112,38 @@
     {%- endfor -%}
   </div>
 
-  {% if section.settings.ever_drop_image %}
-    <div class="{{ section.settings.custom_class1 }}">
+{% if section.settings.ever_drop_image or section.settings.ever_drop_image1 or section.settings.ever_drop_image2 or section.settings.ever_drop_image3 %}
+  <div class="{{ section.settings.custom_class1 }}">
+    {% if section.settings.ever_drop_image %}
       <img
         src="{{ section.settings.ever_drop_image | img_url: '1024x1024' }}"
         alt="{{ section.settings.ever_drop_image_alt_text }}"
       >
+    {% endif %}
+    
+    {% if section.settings.ever_drop_image1 %}
       <img
         src="{{ section.settings.ever_drop_image1 | img_url: '1024x1024' }}"
         alt="{{ section.settings.ever_drop_image_alt_text1 }}"
       >
+    {% endif %}
+    
+    {% if section.settings.ever_drop_image2 %}
       <img
         src="{{ section.settings.ever_drop_image2 | img_url: '1024x1024' }}"
         alt="{{ section.settings.ever_drop_image_alt_text2 }}"
       >
-    </div>
-  {% endif %}
+    {% endif %}
+    
+    {% if section.settings.ever_drop_image3 %}
+      <img
+        src="{{ section.settings.ever_drop_image3 | img_url: '1024x1024' }}"
+        alt="{{ section.settings.ever_drop_image_alt_text3 }}"
+      >
+    {% endif %}
+  </div>
+{% endif %}
+
 
 
 </div>
@@ -138,22 +154,31 @@
   <img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object_copy_2.png?v=1730986797">
   <img src="https://cdn.shopify.com/s/files/1/0861/1106/0252/files/Vector_Smart_Object1_4f714a28-f79a-40fb-afe1-387b4173249a.png?v=1730986797">
 </div>
-  {% if section.settings.mob_bg_image %}
+{% if section.settings.mob_bg_image or section.settings.mob_bg_image1 or section.settings.mob_bg_image2 %}
   <div class="{{ section.settings.custom_classmobbg }}">
-    <img
-      src="{{ section.settings.mob_bg_image | img_url: '1024x1024' }}"
-      alt="{{ section.settings.mob_bg_image_alt_text }}"
-    >
-    <img
-      src="{{ section.settings.mob_bg_image1 | img_url: '1024x1024' }}"
-      alt="{{ section.settings.mob_bg_image_alt_text1 }}"
-    >
-    <img
-      src="{{ section.settings.mob_bg_image2 | img_url: '1024x1024' }}"
-      alt="{{ section.settings.mob_bg_image_alt_text2 }}"
-    >
+    {% if section.settings.mob_bg_image %}
+      <img
+        src="{{ section.settings.mob_bg_image | img_url: '1024x1024' }}"
+        alt="{{ section.settings.mob_bg_image_alt_text }}"
+      >
+    {% endif %}
+    
+    {% if section.settings.mob_bg_image1 %}
+      <img
+        src="{{ section.settings.mob_bg_image1 | img_url: '1024x1024' }}"
+        alt="{{ section.settings.mob_bg_image_alt_text1 }}"
+      >
+    {% endif %}
+    
+    {% if section.settings.mob_bg_image2 %}
+      <img
+        src="{{ section.settings.mob_bg_image2 | img_url: '1024x1024' }}"
+        alt="{{ section.settings.mob_bg_image_alt_text2 }}"
+      >
+    {% endif %}
   </div>
 {% endif %}
+
 {% schema %}
 {
   "name": "t:sections.multirow.name",
@@ -166,6 +191,16 @@
       "type": "text",
       "id": "custom_class",
       "label": "Custom class"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom id main row"
+    },
+    {
+      "type": "text",
+      "id": "custom_classrow",
+      "label": "Custom class for Rows"
     },
     {
       "type": "text",
@@ -435,6 +470,17 @@
     {
       "type": "text",
       "id": "ever_drop_image_alt_text2",
+      "label": "Ever Drop Image Alt Text",
+      "default": "Description of the ever drop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "ever_drop_image3",
+      "label": "Image Four"
+    },
+    {
+      "type": "text",
+      "id": "ever_drop_image_alt_text3",
       "label": "Ever Drop Image Alt Text",
       "default": "Description of the ever drop image"
     },
